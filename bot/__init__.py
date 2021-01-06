@@ -1,3 +1,4 @@
+import os
 from discord.ext.commands import Bot as BotBase
 from discord import Embed
 
@@ -10,13 +11,23 @@ class NeroBot(BotBase):
         self.ready = False
         self.guild = None
         super().__init__(command_prefix=PREFIX, owner_ids=OWNER_IDS)
+    
+    def setup(self):
+        #se cargan los cogs de forma automática utilizandolos como modulos
+        for filename in os.listdir("./cogs"):
+            if filename.endswith(".py") and filename != "__init__.py":
+                self.load_extension(f'cogs.{filename[:-3]}')
+        print("Setup complete!")
 
     def run(self, TOKEN):
         print("Starting...")
+        print("Running setup...")
+        self.setup()
+        print("Running bot...")
         super().run(TOKEN, reconnect=True)
         
     async def on_connect(self):
-        print("Nero in connected")
+        print("Nero is connected!")
         
     async def on_disconnect(self):
         print("Nero is offline")
@@ -24,8 +35,7 @@ class NeroBot(BotBase):
     async def on_ready(self):
         if not self.ready:
             self.ready = True
-            print("Nero is ready")
-
+            print("Nero is ready!")
             channel = self.get_channel(793304369588076544)
             embed = Embed(title="Now online!", description="Nero is now online!", colour=0xC70039)
             embed.add_field(name="Hello everyone", value="I greet all my masters, i'm here to help you", inline=False)
