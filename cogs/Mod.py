@@ -4,18 +4,17 @@ from discord.utils import find
 from discord.ext.commands import Cog, Greedy, Converter
 from discord.ext.commands import CheckFailure, BadArgument
 from discord.ext.commands import command, has_permissions, bot_has_permissions
+from settings import LOG_CHANNEL
 
 class BannedUser(Converter):
 	async def convert(self, context, arg):
 		if context.guild.me.guild_permissions.ban_members:
-            #Se mira buscando el id que dan por y si se encuentra entonces se devuelve el usuario
 			if arg.isdigit():
 				try:
 					return (await context.guild.fetch_ban(Object(id=int(arg)))).user
 				except NotFound:
 					raise BadArgument
 
-        #Sino se busca por otras formas como el nombre de usuario
 		banned = [e.user for e in await context.guild.bans()]
 		if banned:
 			if (user := find(lambda u: str(u) == arg, banned)) is not None:
@@ -42,7 +41,7 @@ class Mod(Cog):
                     embed.add_field(name="Member", value=target.name, inline=False)
                     embed.add_field(name="Actioned by", value=f"{context.author.display_name}", inline=False)
                     embed.add_field(name="Reason", value=reason, inline=False)
-                    await self.bot.get_channel(796792514861989888).send(embed=embed)
+                    await self.bot.get_channel(LOG_CHANNEL).send(embed=embed)
                 else:
                     await context.send(f"{target.display_name} could not be kicked")
     
@@ -66,7 +65,7 @@ class Mod(Cog):
                     embed.add_field(name="Member", value=target.name, inline=False)
                     embed.add_field(name="Actioned by", value=f"{context.author.display_name}", inline=False)
                     embed.add_field(name="Reason", value=reason, inline=False)
-                    await self.bot.get_channel(796792514861989888).send(embed=embed)
+                    await self.bot.get_channel(LOG_CHANNEL).send(embed=embed)
                 else:
                     await context.send(f"{target.display_name} could not be banned")
     
@@ -75,7 +74,7 @@ class Mod(Cog):
         if isinstance(exc, CheckFailure):
             await context.send("Insufficient permissions to perfom that task.")
 
-    @command(name="unban")
+    @command(name="unban", brief="This command unbans members from the server, you can attach the reason so the members know why they are been unbanned")
     @bot_has_permissions(ban_members=True)
     @has_permissions(ban_members=True)
     async def unban_members(self, context, targets: Greedy[BannedUser], *, reason: Optional[str] = "No reason provided"):
@@ -89,7 +88,12 @@ class Mod(Cog):
                 embed.add_field(name="Member", value=target.name, inline=False)
                 embed.add_field(name="Actioned by", value=f"{context.author.display_name}", inline=False)
                 embed.add_field(name="Reason", value=reason, inline=False)
-                await self.bot.get_channel(796792514861989888).send(embed=embed)
+                await self.bot.get_channel(LOG_CHANNEL).send(embed=embed)
+    
+    @Cog.listener()
+    async def on_ready(self):
+        if not self.bot.ready:
+            self.bot.cogs_ready.ready_up("Mod")
 
 def setup(bot):
     bot.add_cog(Mod(bot))

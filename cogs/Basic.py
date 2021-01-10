@@ -1,16 +1,22 @@
-from discord.ext import commands
+from discord.ext.commands import Cog
+from discord.ext.commands import command
 
-class Basic(commands.Cog):
+class Basic(Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.command(brief="Nero responds with pong")
+    @command(brief="Nero responds with pong")
     async def ping(self, context):
         await context.send("Pong")
 
-    @commands.command(brief="Command to greet Nero")
+    @command(brief="Command to greet Nero")
     async def hello(self, context):
         await context.send(f"Hello, Master {context.author.mention}")
+    
+    @Cog.listener()
+    async def on_ready(self):
+        if not self.bot.ready:
+            self.bot.cogs_ready.ready_up("Basic")
 
 def setup(bot):
     bot.add_cog(Basic(bot))

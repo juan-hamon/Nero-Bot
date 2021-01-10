@@ -9,7 +9,7 @@ def syntax(command):
     parameters = []
     for key, value in command.params.items():
         if key not in ("self","context"):
-            parameters.append(f"[{key}]" if "Optional" in str(value) else f"<{key}>")
+            parameters.append(f"[{key}]" if ("Optional" in str(value) or "NoneType" in str(value)) else f"<{key}>")
     parameters = " ".join(parameters)
     if len(parameters) > 0:
         return f"`{str(command)} {parameters}`"
@@ -60,6 +60,11 @@ class Help(Cog):
                 await self.command_help(context, command)
             else:
                 await context.send("That command does not exist.")
+    
+    @Cog.listener()
+    async def on_ready(self):
+        if not self.bot.ready:
+            self.bot.cogs_ready.ready_up("Help")
 
 def setup(bot):
     bot.add_cog(Help(bot))
