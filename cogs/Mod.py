@@ -26,7 +26,7 @@ class Mod(Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @command(name="kick", brief="This command kicks members from the server, you can attach the reason so the members know why they are been kicked")
+    @command(name="kick", brief="This command kicks members from the server, you can attach the reason so the members know why they are been kicked.")
     @bot_has_permissions(kick_members=True)
     @has_permissions(kick_members=True)
     async def kick_members(self, context, targets: Greedy[Member], *, reason: Optional[str] = "No reason provided"):
@@ -50,7 +50,7 @@ class Mod(Cog):
         if isinstance(exc, CheckFailure):
             await context.send("Insufficient permissions to perfom that task.")
 
-    @command(name="ban", brief="This command bans members from the server, you can attach the reason so the members know why they are been banned")
+    @command(name="ban", brief="This command bans members from the server, you can attach the reason so the members know why they are been banned.")
     @bot_has_permissions(ban_members=True)
     @has_permissions(ban_members=True)
     async def ban_members(self, context, targets: Greedy[Member], *, reason: Optional[str] = "No reason provided"):
@@ -74,7 +74,7 @@ class Mod(Cog):
         if isinstance(exc, CheckFailure):
             await context.send("Insufficient permissions to perfom that task.")
 
-    @command(name="unban", brief="This command unbans members from the server, you can attach the reason so the members know why they are been unbanned")
+    @command(name="unban", brief="This command unbans members from the server, you can attach the reason so the members know why they are been unbanned.")
     @bot_has_permissions(ban_members=True)
     @has_permissions(ban_members=True)
     async def unban_members(self, context, targets: Greedy[BannedUser], *, reason: Optional[str] = "No reason provided"):
@@ -89,7 +89,18 @@ class Mod(Cog):
                 embed.add_field(name="Actioned by", value=f"{context.author.display_name}", inline=False)
                 embed.add_field(name="Reason", value=reason, inline=False)
                 await self.bot.get_channel(LOG_CHANNEL).send(embed=embed)
-    
+
+    @command(name="clear", brief="This command clears a certain amount of messages from the channel where this command is called.")
+    @bot_has_permissions(manage_messages=True)
+    @has_permissions(manage_messages=True)
+    async def clear_messages_from_channel(self, context, limit: Optional[int]=1):
+        if 0 < limit <= 50:
+            await context.message.delete()
+            deleted_messages = await context.channel.purge(limit=limit)
+            await context.send(f"I've deleted {len(deleted_messages)} messages.", delete_after=5)
+        else:
+            await context.send("The limit of messages provided is not within acceptable bounds.")
+
     @Cog.listener()
     async def on_ready(self):
         if not self.bot.ready:
