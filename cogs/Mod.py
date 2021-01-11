@@ -90,6 +90,11 @@ class Mod(Cog):
                 embed.add_field(name="Reason", value=reason, inline=False)
                 await self.bot.get_channel(LOG_CHANNEL).send(embed=embed)
 
+    @unban_members.error
+    async def unban_members_error(self, context, exc):
+        if isinstance(exc, CheckFailure):
+            await context.send("Insufficient permissions to perfom that task.")
+
     @command(name="clear", brief="This command clears a certain amount of messages from the channel where this command is called.")
     @bot_has_permissions(manage_messages=True)
     @has_permissions(manage_messages=True)
@@ -100,6 +105,11 @@ class Mod(Cog):
             await context.send(f"I've deleted {len(deleted_messages)} messages.", delete_after=5)
         else:
             await context.send("The limit of messages provided is not within acceptable bounds.")
+
+    @clear_messages_from_channel.error
+    async def clear_messages_from_channel_error(self, context, exc):
+        if isinstance(exc, CheckFailure):
+            await context.send("Insufficient permissions to perfom that task.")
 
     @Cog.listener()
     async def on_ready(self):
