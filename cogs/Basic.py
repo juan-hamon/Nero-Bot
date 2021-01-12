@@ -6,7 +6,7 @@ class Basic(Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @command(brief="Nero responds with pong and the response time")
+    @command(brief="Nero responds with pong and the response time.")
     async def ping(self, context):
         start = time()
         message = await context.send("Pong")
@@ -23,7 +23,7 @@ class Basic(Cog):
             await context.send("Shutting down...")
             await self.bot.logout()
         else:
-            await context.send("Insufficient permissions to perfom that task.")
+            await context.send("Insufficient permissions to perform that task.")
     
     @Cog.listener()
     async def on_ready(self):

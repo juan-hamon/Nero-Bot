@@ -48,7 +48,7 @@ class Help(Cog):
         embed.add_field(name="Command description", value=command.brief)
         await context.send(embed=embed)
 
-    @command(brief="This command show how to use an specific command send by parameter or lists all the commands available with their description")
+    @command(brief="This command show how to use an specific command send by parameter or lists all the commands available with their description.")
     async def help(self, context, command: Optional[str]):
         if command is None:
             await context.message.delete()

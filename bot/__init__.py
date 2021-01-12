@@ -46,13 +46,13 @@ class NeroBot(Bot):
         self.setup()
         print("Running bot...")
         super().run(TOKEN, reconnect=True)
-        
+    
     async def on_connect(self):
         print("Nero is connected!")
-        
+    
     async def on_disconnect(self):
         print("Nero is offline")
-        
+    
     async def on_ready(self):
         if not self.ready:
             self.guild = self.get_guild(GUILD)
@@ -62,7 +62,7 @@ class NeroBot(Bot):
             print("Nero is ready!")
             channel = self.get_channel(LOG_CHANNEL)
             embed = Embed(title="Now online!", description="Nero is now online!", colour=0xC70039)
-            embed.add_field(name="Hello everyone", value="I greet all my masters, i'm here to help you", inline=False)
+            embed.add_field(name="Hello everyone", value="I greet all my masters, i'm here to help you.", inline=False)
             await channel.send(embed = embed)
         else:
             print("Nero reconected")

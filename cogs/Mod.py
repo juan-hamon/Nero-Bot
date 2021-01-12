@@ -43,7 +43,7 @@ class Mod(Cog):
                     embed.add_field(name="Reason", value=reason, inline=False)
                     await self.bot.get_channel(LOG_CHANNEL).send(embed=embed)
                 else:
-                    await context.send(f"{target.display_name} could not be kicked")
+                    await context.send(f"{target.display_name} could not be kicked!")
     
     @kick_members.error
     async def kick_members_error(self, context, exc):
@@ -67,7 +67,7 @@ class Mod(Cog):
                     embed.add_field(name="Reason", value=reason, inline=False)
                     await self.bot.get_channel(LOG_CHANNEL).send(embed=embed)
                 else:
-                    await context.send(f"{target.display_name} could not be banned")
+                    await context.send(f"{target.display_name} could not be banned!")
     
     @ban_members.error
     async def ban_members_error(self, context, exc):
@@ -95,7 +95,7 @@ class Mod(Cog):
         if isinstance(exc, CheckFailure):
             await context.send("Insufficient permissions to perfom that task.")
 
-    @command(name="clear", brief="This command clears a certain amount of messages from the channel where this command is called.")
+    @command(name="clear", brief="This command clears a certain amount of messages from the channel where is called.")
     @bot_has_permissions(manage_messages=True)
     @has_permissions(manage_messages=True)
     async def clear_messages_from_channel(self, context, limit: Optional[int]=1):

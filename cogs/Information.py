@@ -17,7 +17,7 @@ class Information(Cog):
             if member.bot:
                 self.bot_members.append(member)
 
-    @command(name="userinfo", brief="This command gives information about the user that is mentioned or, if not provided, the user that calls the command")
+    @command(name="userinfo", brief="This command gives information about the user that is mentioned or, if not provided, the user that calls the command.")
     async def user_information(self, context, target: Optional[Member]):
         target = target or context.author
         embed = Embed(title=f"{target.name} information", colour=0xC70039)
@@ -30,7 +30,7 @@ class Information(Cog):
         embed.add_field(name="Boosted", value=bool(target.premium_since), inline=True)
         await context.send(embed=embed)
 
-    @command(name="serverinfo", brief="This commnad gives information about the server")
+    @command(name="serverinfo", brief="This command gives information about the server.")
     async def server_information(self, context):
         embed = Embed(title="Server information", colour=0xC70039)
         embed.add_field(name="ID",value=context.guild.id,inline=True)

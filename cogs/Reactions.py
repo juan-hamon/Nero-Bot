@@ -5,7 +5,7 @@ from settings import ROLES_CHANNEL, REACTION_MESSAGE
 class Reactions(Cog):
     def __init__(self, bot):
         self.bot = bot
-
+    
     @Cog.listener()
     async def on_raw_reaction_add(self, payload):
         if self.bot.ready and payload.message_id == self.reaction_message.id:

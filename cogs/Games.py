@@ -6,7 +6,7 @@ class Games(Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @command(brief="Gives a random number between 1 and 100")
+    @command(brief="Gives a random number between 1 and 100.")
     async def roll(self, context):
         number = random.randrange(1,101)
         await context.send(number)

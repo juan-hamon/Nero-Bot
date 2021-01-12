@@ -1,5 +1,4 @@
 from discord.ext.commands import Cog
-from discord.ext.commands import command
 from settings import WELCOME_CHANNEL, WELCOME_ROLE
 
 class Welcome(Cog):
