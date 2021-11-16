@@ -28,14 +28,14 @@ Nero cuenta con las siguientes funcionalidades:
 Para poder ejecutar el código se necesitará lo siguiente:
 - Python 3.8.0 o superior.
 - `discord.py` 1.5.1 o superior.
-- `discord-ext-menus` 1.0.0a o superior.
+- `python-dotenv` 0.19.2
 
 ### Para instalar Python:
 Descargar la última versión aquí: https://www.python.org/downloads/
 ### Para instalar `discord.py`
 `pip install discord.py`
-### Para instalar `discord-ext-menus`
-`pip install git+https://github.com/Rapptz/discord-ext-menus`
+### Para instalar `python-dotenv`
+`pip install python-dotenv`
 ## **En caso de querer utilizar como base**
 En caso de querer utilizar este código como base para otro bot, se requere crear un archivo .env que utilizará `settings.py` para cargar cierta información que utiliza Nero. Dentro de este archivo deben estar las siguientes variables:
   - `TOKEN`: Es el token que genera discord para el bot.
